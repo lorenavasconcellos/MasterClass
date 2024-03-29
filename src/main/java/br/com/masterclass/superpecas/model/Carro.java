@@ -1,17 +1,15 @@
 package br.com.masterclass.superpecas.model;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 @Entity
 @Table(name = "Carros")
-public class CarroModel {
+public class Carro {
 
     @Id
     @Column(name = "CarroId", nullable = false)
-    int id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    Long id;
 
     @Column(name = "NomeModelo", nullable = false)
     String nomeModelo;
@@ -22,11 +20,11 @@ public class CarroModel {
     @Column(name = "CodigoUnico", nullable = false)
     String codigoUnico;
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

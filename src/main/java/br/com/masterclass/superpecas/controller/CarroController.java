@@ -1,40 +1,44 @@
 package br.com.masterclass.superpecas.controller;
 
-import br.com.masterclass.superpecas.model.CarroModel;
 import br.com.masterclass.superpecas.model.DTO.CarroDTO;
-import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.Parameter;
-import io.swagger.v3.oas.annotations.media.Content;
-import io.swagger.v3.oas.annotations.media.Schema;
-import io.swagger.v3.oas.annotations.responses.ApiResponse;
-import io.swagger.v3.oas.annotations.responses.ApiResponses;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import br.com.masterclass.superpecas.service.CarroService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/carro")
 public class CarroController {
-    @RequestMapping(value = "/", method = RequestMethod.GET)
-    public String buscaCarro() {
-        return "teste";
+
+    @Autowired CarroService carroService;
+
+    @RequestMapping(value = "/page", method = RequestMethod.GET)
+    public Page<CarroDTO> getAllCars(@RequestParam int page, @RequestParam int size) {
+        return carroService.getAllCars(page, size);
     }
 
+    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
+    public CarroDTO getById(@PathVariable Long id) {
+        return carroService.getById(id);
+    }
 
-//    @Operation(summary = "Buscar carro", description = "Busca os dados de um carro pelo seu Id.")
-//    @ApiResponses({ @ApiResponse(responseCode = "200", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = CarroDTO.class)) }),
-//            @ApiResponse(responseCode = "404", description = "Carro não encontrado", content = @Content) })
-//    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
-//    public ResponseEntity<CarroDTO> buscarCarro(@Parameter(description = "Id do Carro", required = true) @PathVariable int id) {
-//        //CarroModel carroModel = carroService.buscaCarro(id);
-//
-//        //if (carroModel == null){
-//            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-//        }
-//
-//        //return new ResponseEntity<>(modelMapper.map(carroModel, CarroDTO.class), HttpStatus.OK);
-//    }
+    @RequestMapping(value = "/nomeModelo", method = RequestMethod.GET)
+    public Page<CarroDTO> getByModelName(@RequestParam int page,@RequestParam int size, @RequestParam String nomeModelo) {
+        return carroService.getByModelName(page, size, nomeModelo);
+    }
+
+    @RequestMapping(value = "/", method = RequestMethod.POST)
+    public CarroDTO insert(@RequestBody CarroDTO carroDTO) {
+        return carroService.insert(carroDTO);
+    }
+
+    @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
+    public CarroDTO edit(@PathVariable Long id, @RequestBody CarroDTO carroDTO) {
+        return carroService.edit(id, carroDTO);
+    }
+
+    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+    public void delete(@PathVariable Long id) {
+        carroService.delete(id);
+    }
 }

@@ -1,20 +1,35 @@
 package br.com.masterclass.superpecas.model.DTO;
 
+import br.com.masterclass.superpecas.model.Peca;
+
 public class PecaDTO {
 
-    int id;
+    Long id;
     String nome;
     String descricao;
     String numeroSerie;
     String fabricante;
     String modeloCarro;
-    Integer carroId;
+    Long carroId;
 
-    public int getId() {
+    public PecaDTO(Peca peca) {
+        this.id = peca.getId();
+        this.nome = peca.getNome();
+        this.descricao = peca.getDescricao();
+        this.numeroSerie = peca.getNumeroSerie();
+        this.fabricante = peca.getFabricante();
+        this.modeloCarro = peca.getModeloCarro();
+        this.carroId = peca.getCarro().getId();
+    }
+
+    public PecaDTO() {
+    }
+
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -58,11 +73,11 @@ public class PecaDTO {
         this.modeloCarro = modeloCarro;
     }
 
-    public Integer getCarroId() {
+    public Long getCarroId() {
         return carroId;
     }
 
-    public void setCarroId(Integer carroId) {
+    public void setCarroId(Long carroId) {
         this.carroId = carroId;
     }
 }

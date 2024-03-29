@@ -4,11 +4,12 @@ import jakarta.persistence.*;
 
 @Entity
 @Table(name = "Pecas")
-public class PecaModel {
+public class Peca {
 
     @Id
     @Column(name = "PecaID", nullable = false)
-    int id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    Long id;
 
     @Column(name = "Nome", nullable = false)
     String nome;
@@ -27,13 +28,13 @@ public class PecaModel {
 
     @OneToOne(optional = false)
     @JoinColumn(name = "CarroID", nullable = false)
-    CarroModel carro;
+    Carro carro;
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -77,11 +78,11 @@ public class PecaModel {
         this.modeloCarro = modeloCarro;
     }
 
-    public CarroModel getCarro() {
+    public Carro getCarro() {
         return carro;
     }
 
-    public void setCarro(CarroModel carro) {
+    public void setCarro(Carro carro) {
         this.carro = carro;
     }
 }
